@@ -41,7 +41,7 @@ runInvertR <- function(regionTable, binSize=50, WCcutoff=0.75, dataDirectory='./
     chr <- paste('chr', regionTable[i,1], sep="")
     startLoc <- regionTable[i,2]
     endLoc <- regionTable[i,3]
-    if padding > 0 {
+    if (padding > 0 ){
       startLoc<- startLoc-padding
       endLoc<- endLoc+padding
     }
