@@ -52,7 +52,8 @@ plotROIFrequencies <- function(fileLocation, fileName, fileFrequencies, chr, bin
   {
     abline(h=callingThreshold, col='gray60', lty=4, lwd=0.2)
   }
-  
+  startLoc<- as.numeric(startLoc)
+  endLoc<- as.numeric(endLoc)
   if(ROIname != 'wholeChr'){
     size<- round(((endLoc+padding) - (startLoc-padding))/1000, digits=2)
     sizeText <- paste(size, ' kb', sep="")
