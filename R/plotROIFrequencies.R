@@ -54,6 +54,7 @@ plotROIFrequencies <- function(fileLocation, fileName, fileFrequencies, chr, bin
   }
   startLoc<- as.numeric(startLoc)
   endLoc<- as.numeric(endLoc)
+  
   if(ROIname != 'wholeChr'){
     size<- round(((endLoc+padding) - (startLoc-padding))/1000, digits=2)
     sizeText <- paste(size, ' kb', sep="")
@@ -142,7 +143,7 @@ plotROIFrequencies <- function(fileLocation, fileName, fileFrequencies, chr, bin
   {
     l <- unique(fileFrequencies[,1])[lib]
     lineIndex <- fileFrequencies[which(fileFrequencies[,1] == l),]
-    lines(lineIndex[,3], round(lineIndex[,6], digits=1), lwd=0.4, col="black")
+    lines(lineIndex[,3], round(as.numeric(lineIndex[,6]), digits=1), lwd=0.4, col="black")
     libNo <- libNo + 1
   
   }
