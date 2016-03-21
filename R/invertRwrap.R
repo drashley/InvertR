@@ -41,6 +41,10 @@ runInvertR <- function(regionTable, binSize=50, WCcutoff=0.75, dataDirectory='./
     chr <- paste('chr', regionTable[i,1], sep="")
     startLoc <- regionTable[i,2]
     endLoc <- regionTable[i,3]
+    if padding > 0 {
+      startLoc<- startLoc-padding
+      endLoc<- endLoc+padding
+    }
     if (chr == 'chrY') { WCcutoff = 0}
     ## NOTE change WCcutoff=0 if chrY (b.c. cannot have a WC chr, and may have large inversions (e.g. cad11) which would be missed if wcCutoff high)
     
