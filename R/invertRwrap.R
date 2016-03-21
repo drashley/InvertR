@@ -83,14 +83,10 @@ runInvertR <- function(regionTable, binSize=50, WCcutoff=0.75, dataDirectory='./
       {
         tempFile <- processBed(startLoc, endLoc, chr, fileName, qual=qual, rmdup=dup, padding=padding, verbose=verbose)   
         chrState <- tempFile[[2]]
-        if(chrState >= WCcutoff) {chrState<-'ww'}else if(chrState <= -WCcutoff){chrState<-'cc'}else{chrState<-'wc'}
-        # if chrState is Negative chr is CRICK/CRICK
         processFile <- tempFile[[1]]
       }else if(type == 'bam') {
         tempFile <- processBam(startLoc, endLoc, chr, fileName, qual=qual, rmdup=dup, padding=padding, verbose=verbose)
         chrState <- tempFile[[2]]
-        if(chrState >= WCcutoff) {chrState<-'ww'}else if(chrState <= -WCcutoff){chrState<-'cc'}else{chrState<-'wc'}
-        # if chrState is Negative chr is CRICK/CRICK
         processFile <- tempFile[[1]]
         processFile<- cbind(chr, processFile[2:length(processFile)]) # pastes chr instead of ch to file
         processFile<- processFile[!duplicated(processFile[2]),]
@@ -102,6 +98,8 @@ runInvertR <- function(regionTable, binSize=50, WCcutoff=0.75, dataDirectory='./
         #Filters out low (< minDepth) read depth libraries. If enough reads are in this library, proceed...
         if(length(processFile[[1]]) > 1 && nrow(processFile)/((endLoc-startLoc)/1000000) > minDepth)
         {
+          if(chrState >= WCcutoff) {chrState<-'ww'}else if(chrState <= -WCcutoff){chrState<-'cc'}else{chrState<-'wc'}
+          # if chrState is Negative chr is CRICK/CRICK
           #calculate the ration of _ to + reads (i.e. the wcCall)
           if (ROIname == 'wholeChr'){
             wcCall <- round((table(processFile$strand)[2]-table(processFile$strand)[1])/nrow(processFile), digits=3)
