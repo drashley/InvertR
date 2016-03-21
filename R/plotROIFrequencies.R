@@ -15,14 +15,14 @@
 #' @param callingThreshold Threshold line used to find ROIs
 #' @param ROI ROI location table 
 #' @param strand if\code{TRUE} plot reads above histrogram
-#' @param png if\code{TRUE} Save png
+#' @param pdf if\code{TRUE} Save pdf
 #' @author Ashley D. Sanders, Mark Hills
 #' @export
-plotROIFrequencies <- function(fileLocation, fileName, fileFrequencies, chr, binSize, startLoc, endLoc, ROIname='wholeChr', gapfile=0, callingThreshold=0.66, ROI=0, padding=0, strand=TRUE, png=TRUE) 
+plotROIFrequencies <- function(fileLocation, fileName, fileFrequencies, chr, binSize, startLoc, endLoc, ROIname='wholeChr', gapfile=0, callingThreshold=0.66, ROI=0, padding=0, strand=TRUE, pdf=TRUE) 
 {
-  #create an empty png
-    if (png==TRUE)
-  	{ png(paste(fileLocation, ROIname,'_', fileName, '_', chr,  '_bin', binSize, '_t', callingThreshold, '.png', sep=""), width=6, height=2.5, units='in', res=800) }
+ 
+    if (pdf==TRUE)
+  	{ pdf(paste(fileLocation, ROIname,'_', fileName, '_', chr,  '_bin', binSize, '_t', callingThreshold, '.pdf', sep=""), width=6, height=2.5) }
   
   if(length(gapfile) != 1 | strand==TRUE)
   {
@@ -148,6 +148,6 @@ plotROIFrequencies <- function(fileLocation, fileName, fileFrequencies, chr, bin
   
   }
 
-   if (png==TRUE){ graphics.off() }
+   if (pdf==TRUE){ graphics.off() }
 }
 
