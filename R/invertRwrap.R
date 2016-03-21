@@ -88,7 +88,7 @@ runInvertR <- function(regionTable, binSize=50, WCcutoff=0.75, dataDirectory='./
         tempFile <- processBam(startLoc, endLoc, chr, fileName, qual=qual, rmdup=dup, padding=padding, verbose=verbose)
         chrState <- tempFile[[2]]
         processFile <- tempFile[[1]]
-        processFile<- cbind(chr, processFile[2:length(processFile)]) # pastes chr instead of ch to file
+        if(nrow(processFile)>0){processFile<- cbind(chr, processFile[2:length(processFile)])} # pastes chr instead of ch to file
         processFile<- processFile[!duplicated(processFile[2]),]
       }
       if(verbose==T){message(paste('-> bedFile generated for ', index, ', chromosome ', ch, sep=""))}
