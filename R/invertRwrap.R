@@ -19,14 +19,14 @@
 #' @param padding Number of bases to extend beyond genomic coordinates listed in regionTable
 #' @param verbose If \code{TRUE} Verbose messages
 #' @param strand If \code{TRUE} Plot the crick and watson reads above the histrogram
-#' @param png If\code{TRUE} Generates a png figure of each file
+#' @param pdf If\code{TRUE} Generates a pdf figure of each file
 #' @param findROIs If\code{TRUE} Runs findROIlocations to locate putative inversions
 #' @param ROI If\code{TRUE} Expects ROI list, if\code{FALSE} Expects chromosome table
 #' @param minDepth The minimum number of reads/Mb required to analyze the chromosome
 #' @param minReads The minimum number of reads within the ROI required for inclusion
 #' @author Ashley D. Sanders, Mark Hills
 #' @export
-runInvertR <- function(regionTable, binSize=50, WCcutoff=0.75, dataDirectory='./InvertR_analysis/', gapfile=0, type='bed', dup=TRUE, qual=10, padding=0, minDepth=20, minReads=20, verbose=TRUE, png=TRUE, strand=TRUE, ROI=FALSE, genotype=TRUE, findROIs=T)
+runInvertR <- function(regionTable, binSize=50, WCcutoff=0.75, dataDirectory='./InvertR_analysis/', gapfile=0, type='bed', dup=TRUE, qual=10, padding=0, minDepth=20, minReads=20, verbose=TRUE, pdf=TRUE, strand=TRUE, ROI=FALSE, genotype=TRUE, findROIs=T)
 {#
   options(warn=-1)
   if(type == 'bam') {library(Rsamtools)}
@@ -157,8 +157,8 @@ runInvertR <- function(regionTable, binSize=50, WCcutoff=0.75, dataDirectory='./
                 #if(verbose==T){message(paste('-> NO ROIs found for ', index, ' file, chromosome ', chr, sep=""))} 
                 
                 
-                ### generates a png  of the single Ss library with gaps and ROI locations highlighted, also calculates the number of reads in the region -> table
-                plotROIFrequencies(chrfileDestination, index, fileFrequencies, chr, binSize, startLoc, endLoc, ROIname=ROIname, gapfile=gapfile, callingThreshold=Th, ROI=ROIlocationTable, padding=padding, strand=strand, png=png)
+                ### generates a pdf  of the single Ss library with gaps and ROI locations highlighted, also calculates the number of reads in the region -> table
+                plotROIFrequencies(chrfileDestination, index, fileFrequencies, chr, binSize, startLoc, endLoc, ROIname=ROIname, gapfile=gapfile, callingThreshold=Th, ROI=ROIlocationTable, padding=padding, strand=strand, pdf=pdf)
               
                 ###### write a bedfile of the reads, and then append the bedgraph
                 bedfile<- cbind(chr,  processFile$pos, processFile$pos+100, index, processFile$mapq, as.character(processFile$strand))
@@ -195,7 +195,7 @@ runInvertR <- function(regionTable, binSize=50, WCcutoff=0.75, dataDirectory='./
       allROIlocationTable<-0}
     
     if(nrow(allFrequencies) < 1){ allFrequencies <- data.frame("fileName", chr, startLoc, endLoc, '+', 0, 1, 'cc' )}
-    plotROIFrequencies(fileDestination, 'overlay', allFrequencies, chr, binSize, startLoc, endLoc, ROIname=ROIname, gapfile=gapfile, callingThreshold=AvTh, ROI=allROIlocationTable, padding=padding, strand=FALSE, png=png)
+    plotROIFrequencies(fileDestination, 'overlay', allFrequencies, chr, binSize, startLoc, endLoc, ROIname=ROIname, gapfile=gapfile, callingThreshold=AvTh, ROI=allROIlocationTable, padding=padding, strand=FALSE, pdf=pdf)
     
     if(verbose==T){message(paste(' ~~ Overlaid plot generated for ', chr, ' *YIPEE!* moving on to next chromosome...', sep=""))}
   }##
